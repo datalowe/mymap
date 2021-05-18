@@ -41,4 +41,16 @@ o.spec("MarkerSignificance", () => {
 
         o(Object.keys(MarkerSignificance.current).length).equals(0);
     });
+
+    o("Valid user gets only own marker significances with getOwnedList", async () => {
+        UserSingleton.username = 'lowe';
+        UserSingleton.password = 'password';
+        await UserSingleton.login();
+
+        await MarkerSignificance.getList();
+
+        const resultLs = await MarkerSignificance.getOwnedList();
+
+        o(resultLs.length).equals(1);
+    });
 });

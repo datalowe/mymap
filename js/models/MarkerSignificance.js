@@ -43,6 +43,18 @@ const MarkerSignificance = {
             m.route.set("/login");
         }
     },
+    /**
+     * @returns An array of marker significances that are owned/created by
+     * the current user (rather than being default significances, which have
+     * an owner_id of `null`).
+     */
+    getOwnedList: async () => {
+        if (MarkerSignificance.list.length === 0) {
+            await MarkerSignificance.getList();
+        }
+
+        return MarkerSignificance.list.filter(x => x.owner_id !== null);
+    }
 };
 
 export { MarkerSignificance };
