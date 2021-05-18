@@ -3,19 +3,24 @@ import m from 'mithril';
 
 import { UserSingleton } from "../models/UserSingleton.js";
 
-const LoginForm = {
+const RegisterForm = {
     view: () => {
         return m('div', [
-            m("h1", "Log in"),
+            m("h1", "Register"),
             m("form.regular-form", {
                 onsubmit: async e => {
                     e.preventDefault();
-                    await UserSingleton.login();
+                    await UserSingleton.register();
                     if (UserSingleton.token) {
                         // m.route.set("/home");
-                        alert("Successfully logged in!");
+                        alert("User successfully created!");
                     } else {
-                        alert("Incorrect username/password, please try again.");
+                        if (UserSingleton.serverMsg.length > 0) {
+                            alert(UserSingleton.serverMsg);
+                        } else {
+                            alert("Something went wrong, please try again later.");
+                        }
+                        
                     }
                 }
             }, [
@@ -36,18 +41,10 @@ const LoginForm = {
                         }
                     }
                 ),
-                m("button.column-span-2.button.success-button[type=submit]", "Log in")
+                m("button.column-span-2.button.success-button[type=submit]", "Register")
             ]),
-        ],
-        m("div", [
-            m("p", "Don't have a user yet?"),
-            m(m.route.Link, {
-                href: "/register",
-                selector: "button"
-            }, "Register")
-        ]),
-        );
+        ]);
     }
 };
 
-export { LoginForm }
+export { RegisterForm }

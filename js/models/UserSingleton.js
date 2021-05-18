@@ -10,6 +10,7 @@ const UserSingleton = {
     username: "",
     password: "",
     token: "",
+    serverMsg: "",
     login: async () => {
         try {
             const result = await m.request({
@@ -36,9 +37,11 @@ const UserSingleton = {
             }
         })
             .then(result => {
-                console.log(result.data.message);
+                UserSingleton.token = result.token;
             })
             .catch(e => {
+                UserSingleton.token = "";
+                UserSingleton.serverMsg = e.message;
                 console.log(e.message);
             });
     },
