@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A front end that lets the user create their personal trip map",
   "main": "index.js",
-  "__type": "module",
+  "type": "module",
   "scripts": {
     "test": "ospec --preload ./test-setup.js",
     "style": "sass --watch style/scss/style.scss style/style.css --no-source-map",
