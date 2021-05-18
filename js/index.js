@@ -4,6 +4,7 @@ import m from 'mithril';
 import { LoginForm } from './views/LoginForm.js';
 import { RegisterForm } from './views/RegisterForm.js';
 import { Layout } from './views/Layout.js';
+import Map from './views/Map.js';
 
 // const LoginForm = require("./views/LoginForm.js");
 // const RegisterForm = require("./views/RegisterForm.js");
@@ -21,4 +22,9 @@ m.route(document.body, "/login", {
             return m(Layout, m(RegisterForm));
         }
     },
+    "/map": {
+        render: () => {
+            return m(Map);
+        }
+    }
 });

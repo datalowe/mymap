@@ -27,8 +27,11 @@
   },
   "homepage": "https://github.com/datalowe/mymap#readme",
   "dependencies": {
+    "css-loader": "^5.2.4",
+    "file-loader": "^6.2.0",
     "mithril": "^2.0.4",
-    "sass": "^1.32.13"
+    "sass": "^1.32.13",
+    "style-loader": "^2.0.0"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0-alpha.0",

@@ -12,8 +12,7 @@ const LoginForm = {
                     e.preventDefault();
                     await UserSingleton.login();
                     if (UserSingleton.token) {
-                        // m.route.set("/home");
-                        alert("Successfully logged in!");
+                        m.route.set("/map");
                     } else {
                         alert("Incorrect username/password, please try again.");
                     }

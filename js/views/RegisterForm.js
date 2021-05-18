@@ -12,15 +12,13 @@ const RegisterForm = {
                     e.preventDefault();
                     await UserSingleton.register();
                     if (UserSingleton.token) {
-                        // m.route.set("/home");
-                        alert("User successfully created!");
+                        m.route.set("/map");
                     } else {
                         if (UserSingleton.serverMsg.length > 0) {
                             alert(UserSingleton.serverMsg);
                         } else {
                             alert("Something went wrong, please try again later.");
                         }
-                        
                     }
                 }
             }, [

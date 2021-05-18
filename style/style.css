@@ -6401,3 +6401,8 @@ readers do not read off random characters that represent icons */
   position: static;
   width: auto;
 }
+
+.map {
+  width: 100%;
+  height: 32rem;
+}
