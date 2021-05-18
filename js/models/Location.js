@@ -40,6 +40,25 @@ const Location = {
             m.route.set("/login");
         }
     },
+    filterList: async (filterStr) => {
+        if (Location.list.length === 0) {
+            await Location.getList();
+        }
+        const filterRegEx = new RegExp(filterStr, 'i');
+
+        return Location.list.filter(x => {
+            if (x.address && x.address.match(filterRegEx)) {
+                return true;
+            }
+            if (x.place_name && x.place_name.match(filterRegEx)) {
+                return true;
+            }
+            if (x.description && x.description.match(filterRegEx)) {
+                return true;
+            }
+            return false;
+        });
+    }
 };
 
 export { Location };

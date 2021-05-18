@@ -25,8 +25,6 @@ o.spec("MarkerIcon", () => {
     o("Marker icons are converted into correct CSS class names", async () => {
         const classNames = await MarkerIcon.getClassNames();
 
-        console.log(classNames);
-
         o(classNames.includes("shopping-bag")).equals(true);
     });
 });
