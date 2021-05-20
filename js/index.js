@@ -4,12 +4,9 @@ import m from 'mithril';
 import { LoginForm } from './views/LoginForm.js';
 import { RegisterForm } from './views/RegisterForm.js';
 import { Layout } from './views/Layout.js';
+import { AddLocationForm } from './views/AddLocationForm.js';
+import { AddSignificanceForm } from './views/AddSignificanceForm.js';
 import Map from './views/Map.js';
-
-// const LoginForm = require("./views/LoginForm.js");
-// const RegisterForm = require("./views/RegisterForm.js");
-
-// const loggedInMatchFun = () => UserSingleton.isLoggedIn() ? true : m.route.set("/home");
 
 m.route(document.body, "/login", {
     "/login": {
@@ -25,6 +22,16 @@ m.route(document.body, "/login", {
     "/map": {
         render: () => {
             return m(Map);
+        }
+    },
+    "/add-location": {
+        render: () => {
+            return m(Layout, m(AddLocationForm));
+        }
+    },
+    "/add-significance": {
+        render: () => {
+            return m(Layout, m(AddSignificanceForm));
         }
     }
 });
