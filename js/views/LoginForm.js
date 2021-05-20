@@ -39,7 +39,7 @@ const LoginForm = {
             ]),
         ],
         m("div", [
-            m("p", "Don't have a user yet?"),
+            m("p", "Don't have an account yet?"),
             m(m.route.Link, {
                 href: "/register",
                 selector: "button"
