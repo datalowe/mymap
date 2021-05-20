@@ -40,6 +40,21 @@ const Location = {
             m.route.set("/login");
         }
     },
+    save: async () => {
+        try {
+            const result = await m.request({
+                method: "POST",
+                url: Location.API_LOC_URL,
+                headers: {
+                    Authorization: `Token ${UserSingleton.token}`,
+                },
+                body: Location.current,
+            });
+            Location.current = result;
+        } catch (e) {
+            console.log(e.message);
+        }
+    },
     filterList: async (filterStr) => {
         if (Location.list.length === 0) {
             await Location.getList();
