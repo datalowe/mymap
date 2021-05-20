@@ -61,6 +61,13 @@ const MarkerIcon = {
             await MarkerIcon.getList();
         }
         return MarkerIcon.list.map(x => iconNames[x.code_name]);
+    },
+    getClassNameById: async (iconId) => {
+        if (MarkerIcon.list.length === 0) {
+            await MarkerIcon.getList();
+        }
+        const codeName = MarkerIcon.list.find(x => x.id == iconId).code_name;
+        return iconNames[codeName];
     }
 };
 

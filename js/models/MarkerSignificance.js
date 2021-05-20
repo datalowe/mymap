@@ -43,6 +43,21 @@ const MarkerSignificance = {
             m.route.set("/login");
         }
     },
+    save: async () => {
+        try {
+            const result = await m.request({
+                method: "POST",
+                url: MarkerSignificance.API_SIG_URL,
+                headers: {
+                    Authorization: `Token ${UserSingleton.token}`,
+                },
+                body: MarkerSignificance.current,
+            });
+            MarkerSignificance.current = result;
+        } catch (e) {
+            console.log(e.message);
+        }
+    },
     /**
      * @returns An array of marker significances that are owned/created by
      * the current user (rather than being default significances, which have
@@ -54,6 +69,13 @@ const MarkerSignificance = {
         }
 
         return MarkerSignificance.list.filter(x => x.owner_id !== null);
+    },
+    getHexCodeById: async (sigId) => {
+        if (MarkerSignificance.list.length === 0) {
+            await MarkerSignificance.getList();
+        }
+        const hexCode = MarkerSignificance.list.find(x => x.id == sigId).hex_code;
+        return hexCode;
     }
 };
 
