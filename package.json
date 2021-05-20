@@ -29,6 +29,8 @@
   "dependencies": {
     "css-loader": "^5.2.4",
     "file-loader": "^6.2.0",
+    "leaflet": "^1.7.1",
+    "leaflet-geosearch": "^3.3.2",
     "mithril": "^2.0.4",
     "sass": "^1.32.13",
     "style-loader": "^2.0.0"
