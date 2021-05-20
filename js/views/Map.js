@@ -4,33 +4,39 @@ import m from "mithril";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
-import position from "../models/UserPosition.js";
 
-import locationIcon from "../../img/location.png";
 import "leaflet/dist/images/marker-icon-2x.png";
 import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
 
-let map;
-const locationMarker = L.icon({
-    iconUrl: locationIcon,
-    iconSize:     [24, 24],
-    iconAnchor:   [12, 12],
-    popupAnchor:  [0, 0]
-});
+import { Location } from "../models/Location.js";
 
-function showMap() {
-    const places = {
-        "BTH": [56.181932, 15.590525],
-        "Stortorget": [56.160817, 15.586703],
-        "Hoglands Park": [56.164077, 15.585887],
-        "Rödebybacken": [56.261121, 15.628609]
-    };
+import addMarkerWithLocData from "./maphelpers/markerHandling.js";
 
-    // setView: Sets the view of the map (geographical center and zoom) 
-    // with the given animation options. ('13' is the zoom level)
-    // map = L.map('map').setView([57, 16], 12);
-    map = L.map('map').setView(places["Stortorget"], 12);
+import showPosition from "./maphelpers/showPosition.js";
+
+import position from "../models/UserPosition.js";
+import {addMarkersWithLocData, clearMarkers} from "./maphelpers/markerHandling.js";
+
+const geocoder = new OpenStreetMapProvider();
+
+async function showMap() {
+    const map = L.map('map');
+    map.activeMarkers = [];
+
+    await Location.getList();
+
+    if (Location.list && Location.list.length > 0) {
+        const lastIndex = Location.list.length - 1;
+        const lastCoords = [Location.list[lastIndex].latitude, Location.list[lastIndex].longitude];
+
+        // setView: Sets the view of the map (geographical center and zoom) 
+        // with the given animation options. ('13' is the zoom level)
+        map.setView(lastCoords, 12);
+    } else {
+        map.setView([59.2722152, 15.2124328], 4);
+    }
+    
 
     // other base maps can be found at:
     // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
@@ -41,36 +47,84 @@ function showMap() {
         OpenStreetMap</a> contributors`
     }).addTo(map);
 
-    Object.entries(places).forEach(([pName, pLoc]) => {
-        L.marker(pLoc).addTo(map).bindPopup(pName);
-    });
-
-    console.log('map should be added!');
-}
-
-function showPosition() {
-    if (position.currentPosition.latitude && position.currentPosition.longitude) {
-        L.marker(
-            [
-                position.currentPosition.latitude,
-                position.currentPosition.longitude
-            ],
-            {
-                icon: locationMarker
-            }
-        ).addTo(map).bindPopup("Din plats");
+    if (Location.list) {
+        addMarkersWithLocData(Location.list, map);
     }
+
+    return map;
 }
 
 const Map = {
-    oninit: position.getPosition,
-    oncreate: showMap,
+    newAddressMarkers: [],
+    addressStr: "",
+    oninit: async () => {
+        position.getPosition();
+        await Location.getList();
+    },
+    oncreate: async () => {
+        Map.map = await showMap();
+    },
     view: function() {
-        showPosition();
-        return [
-            m("h1", "Map"),
+        showPosition(Map.map);
+        return ('div', [
+            m("input#search-locations[type=text]" +
+                "[placeholder=Name/address/description keywords...]", {
+                    oninput: async e => {
+                        const locLs = await Location.filterList(e.target.value);
+
+                        await clearMarkers(Map.map);
+                        await addMarkersWithLocData(locLs, Map.map);
+                    }
+                }
+            ),
+            m("form.regular-form", {
+                onsubmit: async e => {
+                    e.preventDefault();
+                    if (Map.newAddressMarkers && Map.newAddressMarkers.length > 0) {
+                        for (const m of Map.newAddressMarkers) {
+                            await Map.map.removeLayer(m);
+                        }
+                        Map.newAddressMarkers = [];
+                    }
+                    await geocoder
+                        .search({ query: Map.addressStr})
+                        .then(resultArr => {
+                            if (resultArr.length > 0) {
+                                for (const res of resultArr) {
+                                    console.log(res);
+                                    const newMarker = L.marker([res.y, res.x]);
+                                    Map.newAddressMarkers.push(newMarker);
+                                    newMarker.addTo(Map.map).bindPopup(res.label);
+                                }
+                                if (resultArr.length > 1) {
+                                    Map.map.setView([resultArr[0].y, resultArr[0].x], 5);
+                                } else {
+                                    Map.map.setView([resultArr[0].y, resultArr[0].x], 8);
+                                }
+                            }
+                            else {
+                                alert("No matching addresses found.");
+                            }
+                    }); 
+                }
+            }, [
+                m("input#search-address[type=text]" +
+                "[placeholder='New Street 123, Cityville]", {
+                    oninput: async e => {
+                        Map.addressStr = e.target.value;
+                        if (Map.newAddressMarkers && Map.newAddressMarkers.length > 0) {
+                            for (const m of Map.newAddressMarkers) {
+                                await Map.map.removeLayer(m);
+                            }
+                            Map.newAddressMarkers = [];
+                        }
+                    }
+                }
+                ),
+                m("button.column-span-2.button.success-button[type=submit]", "Search")
+            ]),
             m("div#map.map", "")
-        ];
+        ]);
     }
 };
 

@@ -2,3 +2,12 @@
     width: 100%;
     height: 32rem;
 }
+
+
+// class for positioning/styling Font Awesome icons placed on top
+// of custom map markers
+.marker-icon {
+    transform: rotate(-45deg);
+    font-size: 1.2rem;
+    color: #fff;
+}
