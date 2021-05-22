@@ -11,20 +11,19 @@ import "leaflet/dist/images/marker-shadow.png";
 
 import { Location } from "../models/Location.js";
 
-import addMarkerWithLocData from "./maphelpers/markerHandling.js";
-
 import showPosition from "./maphelpers/showPosition.js";
 
 import position from "../models/UserPosition.js";
-import {addMarkersWithLocData, clearMarkers} from "./maphelpers/markerHandling.js";
+import {addMarkersWithLocData, clearMarkers, addWeatherMarkers, clearWeatherMarkers} from "./maphelpers/markerHandling.js";
+import { ForecastPoint } from "../models/ForecastPoint.js";
 
 const geocoder = new OpenStreetMapProvider();
 
 async function showMap() {
     const map = L.map('map');
-    map.activeMarkers = [];
 
     await Location.getList();
+    await ForecastPoint.getForAllLocations();
 
     if (Location.list && Location.list.length > 0) {
         const lastIndex = Location.list.length - 1;
@@ -60,13 +59,31 @@ const Map = {
     oninit: async () => {
         position.getPosition();
         await Location.getList();
+        await ForecastPoint.getForAllLocations();
     },
     oncreate: async () => {
         Map.map = await showMap();
+        Map.showingWeather = false;
     },
     view: function() {
         showPosition(Map.map);
         return ('div', [
+            m(
+                "button#swap-search[type=button]", {
+                    onclick: async e => {
+                        const iconChild = document.getElementById('swap-search').children[0];
+
+                        if (iconChild.classList.contains('fa-globe')) {
+                            iconChild.classList.remove('fa-globe');
+                            iconChild.classList.add('fa-filter');
+                        } else {
+                            iconChild.classList.add('fa-globe');
+                            iconChild.classList.remove('fa-filter');
+                        }
+                    }
+                }, 
+                m("i[class=fas fa-filter]")
+            ),
             m("input#search-locations[type=text]" +
                 "[placeholder=Name/address/description keywords...]", {
                     oninput: async e => {
@@ -91,7 +108,6 @@ const Map = {
                         .then(resultArr => {
                             if (resultArr.length > 0) {
                                 for (const res of resultArr) {
-                                    console.log(res);
                                     const newMarker = L.marker([res.y, res.x]);
                                     Map.newAddressMarkers.push(newMarker);
                                     newMarker.addTo(Map.map).bindPopup(res.label);
@@ -121,8 +137,24 @@ const Map = {
                     }
                 }
                 ),
-                m("button.column-span-2.button.success-button[type=submit]", "Search")
             ]),
+            m("button.column-span-2.button.success-button[type=submit]", m("i[class=fas fa-search]")),
+            m(
+                "button[type=button][class=map-primary-button]", 
+                {
+                    onclick: async e => {
+                        if (Map.showingWeather) {
+                            await clearWeatherMarkers(Map.map);
+                            await addMarkersWithLocData(Location.list, Map.map);
+                        } else {
+                            await clearMarkers(Map.map);
+                            addWeatherMarkers(ForecastPoint.list, Map.map, 0);
+                        }
+                        Map.showingWeather = !Map.showingWeather;
+                    }
+                },
+                m("i[class=fas fa-cloud map-primary-button-content]")
+            ),
             m("div#map.map", "")
         ]);
     }

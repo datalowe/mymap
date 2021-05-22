@@ -1,9 +1,16 @@
 import { MarkerIcon } from "../../models/MarkerIcon.js";
 import { MarkerSignificance } from "../../models/MarkerSignificance.js";
-import { iconComponentFactory } from "../buildcomponents/iconComponentFactory.js";
+import { iconComponentFactory, weatherIconComponentFactory } from "../buildcomponents/iconComponentFactory.js";
 
+const formWeatherMarker = async (forecastData) => {
+    const weatherIcon = weatherIconComponentFactory(forecastData.symbol_name);
+    const markerTitle = `<h2><strong>${forecastData.t}°C</strong></h2>`;
 
-const formMarkerWithLocData = async (loc, map) => {
+    return L.marker([forecastData.latitude, forecastData.longitude], {icon: weatherIcon}).
+    bindPopup(markerTitle);
+};
+
+const formMarkerWithLocData = async (loc) => {
     const iconName = await MarkerIcon.getClassNameById(loc.icon);
     const hexCode = await MarkerSignificance.getHexCodeById(loc.significance);
     const locIcon = iconComponentFactory('#' + hexCode, iconName);
@@ -19,8 +26,11 @@ const formMarkerWithLocData = async (loc, map) => {
     bindPopup(markerTitle + address + desc);
 };
 
-const addMarkersWithLocData = async (arrLoc, map) => {
-    for (const loc of arrLoc) {
+const addMarkersWithLocData = async (locArr, map) => {
+    if (!map.hasOwnProperty('activeMarkers')) {
+        map.activeMarkers = [];
+    }
+    for (const loc of locArr) {
         const marker = await formMarkerWithLocData(loc);
         map.activeMarkers.push(marker);
         marker.addTo(map);
@@ -33,4 +43,28 @@ const clearMarkers = async map => {
     });
 }
 
-export { addMarkersWithLocData, clearMarkers };
+const addWeatherMarkers = async (forecastArr, map, hoursFromNow) => {
+    if (!map.hasOwnProperty('activeWeatherMarkers')) {
+        map.activeWeatherMarkers = [];
+    }
+    for (const forecast of forecastArr) {
+        console.log(`symbol_name_${hoursFromNow}h`);
+        const marker = await formWeatherMarker({
+            't': forecast[`t_${hoursFromNow}h`],
+            'symbol_name': forecast[`symbol_name_${hoursFromNow}h`],
+            'latitude': forecast['latitude'],
+            'longitude': forecast['longitude']
+        });
+        map.activeWeatherMarkers.push(marker);
+        console.log(marker);
+        marker.addTo(map);
+    }
+};
+
+const clearWeatherMarkers = async map => {
+    await map.activeWeatherMarkers.forEach(marker => {
+        map.removeLayer(marker);
+    });
+}
+
+export { addMarkersWithLocData, clearMarkers, addWeatherMarkers, clearWeatherMarkers };
