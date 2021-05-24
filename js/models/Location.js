@@ -9,7 +9,7 @@ Represents a geographical location.
 const Location = {
     list: [],
     current: {},
-    API_LOC_URL: "http://localhost:8000/api/locations/",
+    API_LOC_URL: "https://mymap-mapback.herokuapp.com/api/locations/",
     getList: async () => {
         try {
             const result = await m.request({
@@ -52,7 +52,7 @@ const Location = {
             });
             Location.current = result;
         } catch (e) {
-            console.log(e.message);
+            console.log(e);
         }
     },
     filterList: async (filterStr) => {

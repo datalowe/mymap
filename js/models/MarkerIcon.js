@@ -36,7 +36,7 @@ Represents map marker icons.
 */
 const MarkerIcon = {
     list: [],
-    API_ICO_URL: "http://localhost:8000/api/markericons/",
+    API_ICO_URL: "https://mymap-mapback.herokuapp.com/api/markericons/",
     getList: async () => {
         try {
             const result = await m.request({

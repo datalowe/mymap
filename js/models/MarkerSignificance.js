@@ -11,7 +11,7 @@ somewhere a traveller plans to stay for a night.
 const MarkerSignificance = {
     list: [],
     current: {},
-    API_SIG_URL: "http://localhost:8000/api/markersignificances/",
+    API_SIG_URL: "https://mymap-mapback.herokuapp.com/api/markersignificances/",
     getList: async () => {
         try {
             const result = await m.request({

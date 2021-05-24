@@ -5,8 +5,8 @@ import m from 'mithril';
 Represents an app user.
 */
 const UserSingleton = {
-    LOGIN_URL: "http://localhost:8000/api/token-auth/",
-    REGISTER_URL: "http://localhost:8000/api/register/",
+    LOGIN_URL: "https://mymap-mapback.herokuapp.com/api/token-auth/",
+    REGISTER_URL: "https://mymap-mapback.herokuapp.com/api/register/",
     username: "",
     password: "",
     token: "",

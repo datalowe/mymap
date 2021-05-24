@@ -10,7 +10,7 @@ Represents a forecast for a location and multiple time points.
 const ForecastPoint = {
     list: [],
     current: {},
-    API_FORECAST_URL: "http://localhost:8000/api/forecasts/",
+    API_FORECAST_URL: "https://mymap-mapback.herokuapp.com/api/forecasts/",
     /*
     Fetches an array of forecast point data and storing them
     in ForecastPoint.list. Takes in an array of objects where each object
