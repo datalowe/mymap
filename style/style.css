@@ -335,17 +335,221 @@ template {
   display: none;
 }
 
-.map-primary-button {
+/* from https://css-tricks.com/snippets/sass/power-function/ */
+/*
+Sass variables for mymap app.
+
+modular scale used: 1.2
+https://www.modularscale.com/?1&rem&1.2
+*/
+/* tables */
+/* navigation */
+/* buttons */
+/* forms */
+/* media tags */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  height: 100%;
+  background-color: #f8f8f8;
+  font-family: "Roboto", serif;
+  line-height: 1.4;
+  color: #333;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 0rem;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2.0736rem;
+  margin-bottom: 1.68rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.728rem;
+}
+
+h3 {
+  font-size: 1.44rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Roboto", sans-serif;
+}
+
+p {
+  width: 100%;
+  font-size: 1rem;
+  font-family: "Roboto", serif;
+  margin-top: 0;
+  margin-bottom: 1.4rem;
+}
+
+a {
+  font-family: 1rem;
+}
+
+.container {
+  background-image: url("../img/backgrounds/topography.svg");
+  background-color: #f8f8f8;
+}
+
+.container {
+  background-color: #f8f8f8;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+button {
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+.button {
+  color: #333;
+  background-color: #fdfdfd;
+  border: 1px solid #989898;
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  text-align: center;
+  border-radius: 0.2rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.primary-button {
+  color: #fdfdfd;
   background-color: #4285f4;
 }
 
-.map-primary-button-content {
-  color: #ffffff;
+.secondary-button {
+  color: #4285f4;
+  background-color: none;
+  border-color: #4285f4;
+}
+
+.floating-action-button {
+  border-radius: 100%;
+  box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.4);
+}
+
+form {
+  text-align: center;
+}
+
+input {
+  border: none;
+}
+
+.regular-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 1rem;
+  justify-items: center;
+  align-items: center;
+  color: #333;
+  padding: 0.6rem 1rem 1.2rem;
+  border-radius: 0.4rem;
+}
+
+.regular-form > label {
+  font-weight: 600;
+}
+
+.regular-form > input, .regular-form > textarea {
+  border: none;
+  outline: none;
+  text-align: center;
+  padding: 0.2rem 1rem;
+  border-radius: 0.2rem 0.2rem 0 0;
+  border-bottom: solid 0.05rem #333;
+  box-shadow: none;
+  transition: 0.2s;
+  background-color: #f5f5f5;
+}
+
+.regular-form > input:active, .regular-form > textarea:active,
+.regular-form > input:focus,
+.regular-form > textarea:focus {
+  border-bottom: solid 0.2rem #4285f4;
+  background-color: #f0f0f0;
+}
+
+.regular-form > textarea {
+  min-height: 6rem;
+}
+
+.send-form-container {
+  margin: 3rem 0;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  background-color: #fdfdfd;
+  border-color: #4285f4;
+  border-style: solid;
+  border-radius: 1rem;
+  justify-self: center;
+  align-self: center;
+  box-shadow: 0 0.2rem 0.5rem 0rem rgba(0, 0, 0, 0.2);
+}
+
+.form-reroute {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  grid-template-columns: 1fr;
+  margin-bottom: 0.4rem;
+  padding: 0 0.4rem;
+}
+
+.form-reroute > p {
+  text-align: center;
+}
+
+.form-top-icon {
+  text-align: center;
+  color: #4285f4;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.form-top-icon.icon-with-header {
+  margin-bottom: 0;
+}
+
+.form-title {
+  color: #4285f4;
+  font-size: 1.44rem;
+}
+
+.item-form > input,
+.item-form > textarea {
+  min-width: 18rem;
 }
 
 .map {
-  width: 100%;
-  height: 32rem;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
 }
 
 .marker-icon {
@@ -357,4 +561,109 @@ template {
 .weather-marker-icon {
   transform: rotate(-45deg);
   height: 2em;
+}
+
+#search-address-form, #search-locations-form {
+  position: absolute;
+  top: 0.5rem;
+  left: 13vw;
+  width: 85vw;
+  z-index: 1;
+}
+
+#search-address, #search-locations {
+  text-align: left;
+  border-radius: 1.2rem;
+  box-shadow: 0 0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1), 0 -0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+  padding: 0.4rem 1rem;
+  outline: none;
+  height: 2.5rem;
+}
+
+#search-address:active, #search-locations:active,
+#search-address:focus,
+#search-locations:focus {
+  background-color: #f0f0f0;
+}
+
+#search-locations {
+  width: 85vw;
+}
+
+#search-address {
+  width: 74vw;
+  margin-right: 1vw;
+}
+
+#show-weather, #goto-position, #search-swap, #button-search {
+  z-index: 1;
+}
+
+#button-search {
+  box-shadow: 0 0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1), 0 -0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+  width: 10vw;
+  background-color: #4285f4;
+  color: #fdfdfd;
+  padding: 0.4rem 0;
+  border-radius: 1rem;
+  height: 2.5rem;
+}
+
+#search-swap {
+  position: absolute;
+  width: 10vw;
+  top: 0.5rem;
+  left: 2vw;
+  padding: 0.4rem 0;
+  color: #4285f4;
+  background-color: #fff;
+  box-shadow: 0 0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1), 0 -0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  height: 2.5rem;
+}
+
+#show-weather, #goto-position {
+  position: absolute;
+  height: 3rem;
+  width: 3rem;
+  font-size: 1.2rem;
+  right: 0.5rem;
+}
+
+#goto-position {
+  bottom: 6rem;
+}
+
+#show-weather {
+  position: absolute;
+  bottom: 2rem;
+}
+
+.map-primary-button {
+  background-color: #4285f4;
+}
+
+.map-primary-button-content {
+  color: #ffffff;
+}
+
+.map-secondary-button {
+  background-color: #ffffff;
+}
+
+.map-secondary-button-content {
+  color: #4285f4;
+}
+
+.leaflet-popup-content h2 {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #4285f4;
+  font-family: "Roboto", sans-serif;
+}
+.leaflet-popup-content p {
+  text-align: center;
+}
+.leaflet-popup-content p em {
+  font-size: 0.8333333333rem;
 }

@@ -7,17 +7,23 @@ import { MarkerIcon } from "../models/MarkerIcon.js";
 import { MarkerSignificance } from "../models/MarkerSignificance.js";
 
 const AddLocationForm = {
-    oninit: () => {
-        MarkerIcon.getList();
-        MarkerSignificance.getList();
+    oninit: async () => {
+        await MarkerIcon.getList();
+        await MarkerSignificance.getList();
+    },
+    oncreate: () => {
+        Location.current.icon = MarkerIcon.list[0].id;
+        Location.current.significance = MarkerSignificance.list[0].id;
     },
     view: () => {
-        return m('div', [
-            m("h1", "Add location"),
-            m("form.regular-form", {
+        return m('div.send-form-container', [
+            m("h1[class=form-title]", "Add location"),
+            m("form.regular-form.item-form", {
                 onsubmit: async e => {
                     e.preventDefault();
-                    Location.save();
+                    await Location.save();
+                    // Location.current = {};
+                    m.route.set("/map");
                 }
             }, [
                 m("label[for=place-name]", "Name"),
@@ -30,7 +36,8 @@ const AddLocationForm = {
                 }
                 ),
                 m("label[for=address]", "Address"),
-                m("input#address[name=address][type=text][placeholder=150 London Wall, London]",
+                m("textarea#address[name=address][placeholder=150 London Wall, London]" +
+                    `[value=${Location.current.address ? Location.current.address : ""}]`,
                     {
                         oninput: e => {
                             Location.current.address = e.target.value;
@@ -38,7 +45,8 @@ const AddLocationForm = {
                     }
                 ),
                 m("label[for=latitude]", "Latitude"),
-                m("input#latitude[name=latitude][type=number][step=any][placeholder=51.5178968]",
+                m("input#latitude[name=latitude][type=number][step=any][placeholder=51.5178968]" +
+                `[value=${Location.current.latitude ? Location.current.latitude : ""}]`,
                     {
                         oninput: e => {
                             Location.current.latitude = e.target.value;
@@ -46,7 +54,8 @@ const AddLocationForm = {
                     }
                 ),
                 m("label[for=longitude]", "Longitude"),
-                m("input#longitude[name=longitude][type=number][step=any][placeholder=-0.0958907]",
+                m("input#longitude[name=longitude][type=number][step=any][placeholder=-0.0958907]" +
+                `[value=${Location.current.longitude ? Location.current.longitude : ""}]`,
                     {
                         oninput: e => {
                             Location.current.longitude = e.target.value;
@@ -91,7 +100,17 @@ const AddLocationForm = {
                         );
                     }),
                 ),
-                m("button.column-span-2.button.success-button[type=submit]", "Save")
+                m("button.column-span-2.button.primary-button[type=submit]", "Save")
+            ]),
+            m("div.form-reroute", [
+                m(m.route.Link, {
+                    selector: "button",
+                    class: "button secondary-button",
+                    type: "button",
+                    href: "/map",
+                    // "button.secondary-button[type=button]"
+                },
+                "Back to map")
             ]),
         ],
         );

@@ -19,4 +19,13 @@ function showPosition(map) {
     }
 }
 
-export default showPosition;
+function moveToPosition(map) {
+    if (position.currentPosition.latitude && position.currentPosition.longitude) {
+        map.setView(
+            [position.currentPosition.latitude, position.currentPosition.longitude], 
+            12
+        );
+    }
+}
+
+export {showPosition, moveToPosition};

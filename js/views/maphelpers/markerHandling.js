@@ -1,6 +1,9 @@
+import m from "mithril";
+
 import { MarkerIcon } from "../../models/MarkerIcon.js";
 import { MarkerSignificance } from "../../models/MarkerSignificance.js";
 import { iconComponentFactory, weatherIconComponentFactory } from "../buildcomponents/iconComponentFactory.js";
+import { Location } from "../../models/Location.js";
 
 const formWeatherMarker = async (forecastData) => {
     const weatherIcon = weatherIconComponentFactory(forecastData.symbol_name);
@@ -15,7 +18,7 @@ const formMarkerWithLocData = async (loc) => {
     const hexCode = await MarkerSignificance.getHexCodeById(loc.significance);
     const locIcon = iconComponentFactory('#' + hexCode, iconName);
     let markerTitle = loc.place_name ? loc.place_name : loc.address;
-    const desc = `<p>${loc.description}</p>`;
+    const desc = loc.description ? `<p>${loc.description}</p>` : "";
     let address = (loc.place_name && loc.address) ? loc.address : "";
 
     markerTitle = `<h2><strong>${markerTitle}</strong></h2>`;
@@ -67,4 +70,25 @@ const clearWeatherMarkers = async map => {
     });
 }
 
-export { addMarkersWithLocData, clearMarkers, addWeatherMarkers, clearWeatherMarkers };
+const markerClickListener = e => {
+    Location.current.latitude = Number.parseFloat(e.latlng.lat).toFixed(6);
+    Location.current.longitude = Number.parseFloat(e.latlng.lng).toFixed(6);
+    if (e.target.address) {
+        Location.current.address = e.target.address;
+    }
+    m.route.set('/add-location');
+}
+
+const formQMarkerAtPos = async (pos, map) => {
+    const locIcon = iconComponentFactory('#000000', 'question');
+    return L.marker([pos.latitude, pos.longitude], {icon: locIcon});
+};
+
+export { 
+    addMarkersWithLocData, 
+    clearMarkers, 
+    addWeatherMarkers, 
+    clearWeatherMarkers,
+    markerClickListener,
+    formQMarkerAtPos
+};

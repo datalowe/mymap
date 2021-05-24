@@ -1,8 +1,10 @@
 .map {
-    width: 100%;
-    height: 32rem;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
 }
 
+$search-item-height: 2.5rem;
 
 // class for positioning/styling Font Awesome icons placed on top
 // of custom map markers
@@ -15,4 +17,134 @@
 .weather-marker-icon {
     transform: rotate(-45deg);
     height: 2em;
+}
+
+%map-form-shared {
+    position: absolute;
+    top: 0.5rem;
+    left: 13vw;
+    width: 85vw;
+    z-index: 1;
+}
+
+%map-input-shared {
+    text-align: left;
+    border-radius: 1.2rem;
+    box-shadow: 0 0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1),
+        0 -0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+    padding: 0.4rem 1rem;
+    outline: none;
+    height: $search-item-height;
+}
+
+%map-input-shared:active,
+%map-input-shared:focus {
+    background-color: $active-input-color;
+}
+
+#search-locations-form {
+    @extend %map-form-shared;
+}
+
+
+#search-locations {
+    @extend %map-input-shared;
+    width: 85vw;
+}
+
+#search-address-form {
+    @extend %map-form-shared;
+}
+
+
+#search-address {
+    @extend %map-input-shared;
+    width: 74vw;
+    margin-right: 1vw;
+}
+
+%map-button-shared {
+    z-index: 1;
+}
+
+#button-search {
+    @extend %map-button-shared;
+    box-shadow: 0 0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1),
+       0 -0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+    width: 10vw;
+    background-color: $primary-middle;
+    color: $inverted-text-color;
+    padding: 0.4rem 0;
+    border-radius: 1rem;
+    height: $search-item-height;
+}
+
+#search-swap {
+    @extend %map-button-shared;
+    position: absolute;
+    width: 10vw;
+    top: 0.5rem;
+    left: 2vw;
+    padding: 0.4rem 0;
+    color: $primary-middle;
+    background-color: $strong-white;
+    box-shadow: 0 0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1),
+    0 -0.05rem 0.05rem 0.1rem rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    height: $search-item-height;
+}
+
+%map-float-button-shared {
+    position: absolute;
+    height: 3rem;
+    width: 3rem;
+    font-size: 1.2rem;
+    right: 0.5rem;
+}
+
+#goto-position {
+    @extend %map-button-shared;
+    @extend %map-float-button-shared;
+    bottom: 6rem;
+}
+
+#show-weather {
+    @extend %map-button-shared;
+    @extend %map-float-button-shared;
+    position: absolute;
+    bottom: 2rem;
+}
+
+.map-primary-button {
+    background-color: #4285f4;
+}
+
+.map-primary-button-content {
+    color: #ffffff;
+}
+
+.map-secondary-button {
+    background-color: #ffffff;
+}
+
+.map-secondary-button-content {
+    color: #4285f4;
+}
+
+.leaflet-popup-content {
+
+    h2 {
+        font-size: $base-font-size * $modular-factor;
+        text-align: center;
+        color: $primary-middle;
+        font-family: $heading-font-family;
+    }
+
+    p {
+        text-align: center;
+
+        em {
+            font-size: $base-font-size / $modular-factor;
+        }
+    }
 }
