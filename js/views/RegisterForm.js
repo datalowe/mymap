@@ -5,8 +5,9 @@ import { UserSingleton } from "../models/UserSingleton.js";
 
 const RegisterForm = {
     view: () => {
-        return m('div', [
-            m("h1", "Register"),
+        return m('div.send-form-container', [
+            m("i[class=fas fa-user-circle form-top-icon icon-with-header]"),
+            m("h1[class=form-title]", "Register"),
             m("form.regular-form", {
                 onsubmit: async e => {
                     e.preventDefault();
@@ -22,7 +23,6 @@ const RegisterForm = {
                     }
                 }
             }, [
-                m("label[for=username]", "Username"),
                 m("input#username[name=username][required=required][type=text]" +
                 "[placeholder=username]",
                 {
@@ -31,15 +31,15 @@ const RegisterForm = {
                     }
                 }
                 ),
-                m("label[for=password]", "Password"),
-                m("input#password[name=password][required=required][type=password]",
+                m("input#password[name=password][required=required][type=password]" +
+                "[placeholder=password]",
                     {
                         oninput: e => {
                             UserSingleton.password = e.target.value;
                         }
                     }
                 ),
-                m("button.column-span-2.button.success-button[type=submit]", "Register")
+                m("button.column-span-2.button.primary-button[type=submit]", "Register")
             ]),
         ]);
     }

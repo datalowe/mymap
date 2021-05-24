@@ -1,0 +1,204 @@
+form {
+    text-align: center;
+}
+
+input {
+    border: none;
+}
+
+.regular-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: $base-font-size;
+    justify-items: center;
+    align-items: center;
+    color: $black;
+    // background-color: $primary-light;
+    padding: $base-font-size * 0.6 $base-font-size * 1 $base-font-size * 1.2;
+    border-radius: 0.4rem;
+}
+
+.regular-form > label {
+    font-weight: 600;
+}
+
+
+%text-input-shared {
+    border: none;
+    outline: none;
+    text-align: center;
+    padding: $base-font-size * 0.2 $base-font-size * 1;
+    border-radius: 0.2rem 0.2rem 0 0;
+    border-bottom: solid $base-font-size * 0.05 $base-text-color;
+    box-shadow: none;
+    transition: 0.2s;
+    background-color: $inactive-input-color;
+}
+
+%text-input-shared:active,
+%text-input-shared:focus {
+    border-bottom: solid $base-font-size * 0.2 $primary-middle;
+    background-color: $active-input-color;
+}
+
+.regular-form > textarea {
+    @extend %text-input-shared;
+    min-height: 6rem;
+}
+
+
+
+
+.regular-form > input {
+    @extend %text-input-shared;
+}
+
+// .regular-form > input:focus,
+// .regular-form > input:active {
+
+// }
+
+.send-form-container {
+    margin: 3rem 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    background-color: $form-background-color;
+    border-color: $primary-middle;
+    border-style: solid;
+    border-radius: 1rem;
+    justify-self: center;
+    align-self: center;
+    box-shadow: 0 0.2rem 0.5rem 0rem rgba(0, 0, 0, 0.2);
+}
+
+.form-reroute {
+    display: grid;
+    justify-content: center;
+    // align-items: center;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    margin-bottom: 0.4rem;
+    padding: 0 0.4rem;
+}
+
+.form-reroute > p {
+    text-align: center;
+}
+
+.form-top-icon {
+    text-align: center;
+    color: $primary-middle;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: $base-font-size * 2;
+}
+
+.form-top-icon.icon-with-header {
+    margin-bottom: 0;
+}
+
+.form-title {
+    color: $primary-middle;
+    font-size: $base-font-size * pow($modular-factor, 2);
+}
+
+.item-form > input,
+.item-form > textarea {
+    min-width: $base-font-size * 18;
+}
+
+// .regular-form > .incorrect {
+//     box-shadow: 0px 0px 4px 5px $incorrect-color;
+// }
+
+// .regular-form > .correct {
+//     box-shadow: 0px 0px 4px 5px $correct-color;
+// }
+
+// .regular-form > textarea {
+//     text-align: center;
+//     padding: $base-font-size * 0.4 $base-font-size * 1;
+//     min-width: 70%;
+//     min-height: $base-font-size * 5;
+//     border-radius: 0.2rem;
+//     box-shadow: none;
+//     border: none;
+//     justify-self: center;
+//     background-color: $inactive-input-color;
+//     transition: 1s;
+// }
+
+// .regular-form > textarea:focus {
+//     background-color: $active-input-color;
+// }
+
+// .regular-form > .button {
+//     // grid-column: 1 / span 2;
+//     justify-self: center;
+//     border-color: $strong-white;
+// }
+
+// .regular-form > label.column-span-2::after {
+//     content: none;
+// }
+
+// @media only screen and (min-width: 800px) {
+//     .regular-form {
+//         background-color: scale-color($secondary-dark);
+//         background-image: linear-gradient(
+//             scale-color($secondary-dark, $lightness: $gradient-base-lightness-shift),
+//             $secondary-dark
+//         );
+//     }
+
+//     form {
+//         min-width: 30%;
+//     }
+
+//     form > label::after {
+//         content: ":";
+//     }
+
+//     form > label {
+//         margin-right: $base-font-size * 1;
+//     }
+
+//     .regular-form {
+//         grid-template-columns: 1fr 1fr;
+//         color: $strong-white;
+//     }
+
+//     .regular-form > :nth-child(2n+1) {
+//         justify-self: left;
+//     }
+
+//     .regular-form > :nth-child(2n) {
+//         justify-self: right;
+//     }
+
+//     .regular-form > .column-span-2 {
+//         grid-column: 1 / span 2;
+//         justify-self: center;
+//     }
+
+//     .regular-form > input {
+//         border-radius: 0.4rem;
+//         border-bottom-color: none;
+//         border-bottom-width: 0;
+//         outline: inherit;
+//         transition: none;
+//     }
+
+//     .regular-form > input:focus {
+//         border-radius: 0.4rem;
+//         border-bottom-color: inherit;
+//         border-bottom-style: none;
+//         border-bottom-width: 0;
+//         // $base-font-size * 0.2 $secondary-light;
+//     }
+
+//     .regular-form > textarea:focus {
+//         background-color: inherit;
+//     }
+// }

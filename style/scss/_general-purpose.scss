@@ -1,0 +1,68 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    height: 100%;
+    background-color: $body-background-color;
+    font-family: $body-font-family;
+    line-height: $base-line-height;
+    color: $base-text-color;
+}
+
+main {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 0 0rem;
+    align-items: center;
+}
+
+h1 {
+    font-size: $h1-font-size;
+    margin-bottom: $base-gap-size * 1.2;
+    text-align: center;
+}
+
+h2 {
+    font-size: $h2-font-size;
+}
+
+h3 {
+    font-size: $h3-font-size;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: $heading-font-family;
+}
+
+p {
+    width: 100%;
+    font-size: $base-font-size;
+    font-family: $body-font-family;
+    margin-top: 0;
+    margin-bottom: $base-gap-size;
+}
+
+a {
+    font-family: $base-font-size;
+}
+
+// pattern courtesy of https://www.heropatterns.com/
+%background-topography {
+    background-image: url('../img/backgrounds/topography.svg');
+    background-color: $container-background-color;
+}
+
+.container {
+    background-color: $container-background-color;
+    justify-content: center;
+    min-height: 100vh;
+    @extend %background-topography;
+}

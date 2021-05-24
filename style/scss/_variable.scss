@@ -1,0 +1,61 @@
+/*
+Sass variables for mymap app.
+
+modular scale used: 1.2
+https://www.modularscale.com/?1&rem&1.2
+*/
+// $primary-dark: #ab7422;
+$primary-middle: #4285f4;
+$primary-light: scale-color($primary-middle, $lightness: 30%);
+
+// $secondary-dark: #1169ab;
+// $secondary-light: #4aadf7;
+
+$white: #fdfdfd;
+$strong-white: #fff;
+$light-grey: #f2f2f2;
+$black: #333;
+
+$container-background-color: #f8f8f8;
+$body-background-color: $container-background-color;
+
+
+$modular-factor: 1.2;
+$base-font-size: 1rem;
+$base-line-height: 1.4;
+$base-gap-size: $base-font-size * $base-line-height;
+$heading-font-family: 'Roboto', sans-serif;
+$body-font-family: 'Roboto', serif;
+
+// $h1-color: $primary-dark;
+$h1-font-size: $base-font-size * pow($modular-factor, 4);
+$h2-font-size: $base-font-size * pow($modular-factor, 3);
+$h3-font-size: $base-font-size * pow($modular-factor, 2);
+$h4-font-size: $base-font-size * $modular-factor;
+$base-text-color: $black;
+$inverted-text-color: $white;
+$gradient-base-lightness-shift: 20%;
+
+/* tables */
+// $table-row-primary-bg-color: $white;
+// $table-row-secondary-bg-color: $light-grey;
+// $table-link-color: $secondary-light;
+
+/* navigation */
+// $navigation-height: 50px;
+// $navigation-active-color: #1891ED;
+
+/* buttons */
+// $success-button-color: #5cb85c;
+// $success-button-color: $primary-middle;
+$primary-button-color: $primary-middle;
+
+/* forms */
+// $incorrect-color: #e33;
+// $correct-color: $success-button-color;
+$inactive-input-color: #f5f5f5;
+$active-input-color: #f0f0f0;
+$form-background-color: $white;
+
+/* media tags */
+// $small-screen-max-width: 900px;

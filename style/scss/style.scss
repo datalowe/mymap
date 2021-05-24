@@ -6,5 +6,9 @@ for 'MyMap' app.
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 @import 'normalize.min';
-@import 'buttons';
+@import 'function';
+@import 'variable';
+@import 'general-purpose';
+@import 'button';
+@import 'form';
 @import 'map';
