@@ -55,6 +55,35 @@ const Location = {
             console.log(e);
         }
     },
+    update: async () => {
+        try {
+            const result = await m.request({
+                method: "PUT",
+                url: Location.API_LOC_URL + `${Location.current.id}/`,
+                headers: {
+                    Authorization: `Token ${UserSingleton.token}`,
+                },
+                body: Location.current,
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    },
+    deleteCurrent: async () => {
+        try {
+            const result = await m.request({
+                method: "DELETE",
+                url: Location.API_LOC_URL + `${Location.current.id}/`,
+                headers: {
+                    Authorization: `Token ${UserSingleton.token}`,
+                }
+            });
+            Location.list = Location.list.filter(x => x.id === Location.current.id);
+            Location.current = {};
+        } catch (e) {
+            console.log(e);
+        }
+    },
     filterList: async (filterStr) => {
         if (Location.list.length === 0) {
             await Location.getList();

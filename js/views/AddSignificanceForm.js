@@ -4,14 +4,17 @@ import m from 'mithril';
 import { MarkerSignificance } from "../models/MarkerSignificance.js";
 
 const AddSignificanceForm = {
+    oninit: () => {
+        MarkerSignificance.current = {};
+    },
     view: () => {
         return m('div.send-form-container', [
             m("h1[class=form-title]", "Add significance label"),
             m("form.regular-form", {
                 onsubmit: async e => {
                     e.preventDefault();
-                    MarkerSignificance.save();
-                    m.route.set("add-location");
+                    await MarkerSignificance.save();
+                    m.route.set("/" + m.route.param('sendto'));
                 }
             }, [
                 m("label[for=label]", "Name"),
@@ -46,7 +49,7 @@ const AddSignificanceForm = {
                         selector: "button",
                         class: "button secondary-button",
                         type: "button",
-                        href: "/add-location",
+                        href: "/" + m.route.param('sendto'),
                     },
                     "Cancel")
                 ]),

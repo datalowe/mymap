@@ -4,6 +4,7 @@ import { MarkerIcon } from "../../models/MarkerIcon.js";
 import { MarkerSignificance } from "../../models/MarkerSignificance.js";
 import { iconComponentFactory, weatherIconComponentFactory } from "../buildcomponents/iconComponentFactory.js";
 import { Location } from "../../models/Location.js";
+import StoredCoords from "../../models/StoredCoords.js";
 
 const formWeatherMarker = async (forecastData) => {
     const weatherIcon = weatherIconComponentFactory(forecastData.symbol_name);
@@ -36,7 +37,12 @@ const addMarkersWithLocData = async (locArr, map) => {
     for (const loc of locArr) {
         const marker = await formMarkerWithLocData(loc);
         map.activeMarkers.push(marker);
-        marker.addTo(map);
+        marker.addTo(map)
+            .on('dblclick', () => {
+                Location.current = loc;
+                StoredCoords.coords = [loc.latitude, loc.longitude];
+                m.route.set('/edit-location');
+            });
     }
 };
 
@@ -70,12 +76,13 @@ const clearWeatherMarkers = async map => {
     });
 }
 
-const markerClickListener = e => {
+const newMarkerClickListener = e => {
     Location.current.latitude = Number.parseFloat(e.latlng.lat).toFixed(6);
     Location.current.longitude = Number.parseFloat(e.latlng.lng).toFixed(6);
     if (e.target.address) {
         Location.current.address = e.target.address;
     }
+    StoredCoords.coords = [Location.current.latitude, Location.current.longitude];
     m.route.set('/add-location');
 }
 
@@ -89,6 +96,6 @@ export {
     clearMarkers, 
     addWeatherMarkers, 
     clearWeatherMarkers,
-    markerClickListener,
+    newMarkerClickListener,
     formQMarkerAtPos
 };

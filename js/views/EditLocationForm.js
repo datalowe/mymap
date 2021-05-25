@@ -6,20 +6,18 @@ import { Location } from "../models/Location.js";
 import { MarkerIcon } from "../models/MarkerIcon.js";
 import { MarkerSignificance } from "../models/MarkerSignificance.js";
 
-const AddLocationForm = {
+const EditLocationForm = {
     oninit: async () => {
         await MarkerIcon.getList();
         await MarkerSignificance.getList();
-        Location.current.icon = MarkerIcon.list[0].id;
-        Location.current.significance = MarkerSignificance.list[0].id;
     },
     view: () => {
         return m('div.send-form-container', [
-            m("h1[class=form-title]", "Add location"),
+            m("h1[class=form-title]", "Edit location"),
             m("form.regular-form.item-form", {
                 onsubmit: async e => {
                     e.preventDefault();
-                    await Location.save();
+                    await Location.update();
                     Location.current = {};
                     m.route.set("/map");
                 }
@@ -106,12 +104,21 @@ const AddLocationForm = {
                         selector: "button",
                         class: "add-secondary-button",
                         type: "button",
-                        href: "/add-significance?sendto=add-location"
+                        href: "/add-significance?sendto=edit-location"
                     },
                     m("i[class=fas fa-plus]"))
                     ]
                 ),
                 m("button.column-span-2.button.primary-button[type=submit]", "Save")
+            ]),
+            m("div.form-reroute", [
+                m(m.route.Link, {
+                    selector: "button",
+                    class: "button primary-warning-button",
+                    type: "button",
+                    href: "/delete-location",
+                },
+                "Remove location")
             ]),
             m("div.form-reroute", [
                 m(m.route.Link, {
@@ -132,4 +139,4 @@ const AddLocationForm = {
     }
 };
 
-export { AddLocationForm };
+export { EditLocationForm };

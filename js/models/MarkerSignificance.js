@@ -44,6 +44,7 @@ const MarkerSignificance = {
         }
     },
     save: async () => {
+        console.log(MarkerSignificance.current);
         try {
             const result = await m.request({
                 method: "POST",

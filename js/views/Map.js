@@ -14,12 +14,14 @@ import { Location } from "../models/Location.js";
 import {showPosition, moveToPosition } from "./maphelpers/showPosition.js";
 
 import position from "../models/UserPosition.js";
+import StoredCoords from "../models/StoredCoords.js";
+
 import {
     addMarkersWithLocData, 
     clearMarkers, 
     addWeatherMarkers, 
     clearWeatherMarkers,
-    markerClickListener,
+    newMarkerClickListener,
     formQMarkerAtPos
 } from "./maphelpers/markerHandling.js";
 import { ForecastPoint } from "../models/ForecastPoint.js";
@@ -39,10 +41,10 @@ async function showMap() {
     await Location.getList();
     await ForecastPoint.getForAllLocations();
 
-    if (Location.list && Location.list.length > 0) {
+    if (StoredCoords.coords.length > 0) {
+        map.setView(StoredCoords.coords, 12);
+    } else if (Location.list && Location.list.length > 0) {
         const lastLoc = [...Location.list].sort((x, y) => x.id < y.id)[0];
-        // const lastCoords = [Location.list[lastIndex].latitude, Location.list[lastIndex].longitude];
-        // const lastCoords = [Location.list[0].latitude, Location.list[0].longitude];
         const lastCoords = [lastLoc.latitude, lastLoc.longitude];
 
         // setView: Sets the view of the map (geographical center and zoom) 
@@ -94,7 +96,7 @@ const Map = {
 
             Map.map.qMarker = marker;
 
-            Map.map.qMarker.on('dblclick', markerClickListener);
+            Map.map.qMarker.on('dblclick', newMarkerClickListener);
         }
         )
     },
@@ -158,8 +160,7 @@ const Map = {
                                     Map.newAddressMarkers.push(newMarker);
                                     const newMark = newMarker.addTo(Map.map)
                                         .bindPopup(res.label)
-                                        // .on('dblclick', e => console.log(e.latlng));
-                                        .on('dblclick', markerClickListener);
+                                        .on('dblclick', newMarkerClickListener);
                                     newMark.address = res.label;
                                 }
                                 if (resultArr.length > 1) {
