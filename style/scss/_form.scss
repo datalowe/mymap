@@ -13,9 +13,13 @@ input {
     justify-items: center;
     align-items: center;
     color: $black;
-    // background-color: $primary-light;
     padding: $base-font-size * 0.6 $base-font-size * 1 $base-font-size * 1.2;
     border-radius: 0.4rem;
+
+    ::placeholder {
+        color: $input-placeholder-color;
+        font-style: italic;
+    }
 }
 
 .regular-form > label {
@@ -106,6 +110,16 @@ input {
 .item-form > input,
 .item-form > textarea {
     min-width: $base-font-size * 18;
+}
+
+.input-with-add-wrapper {
+    display: grid;
+    background-color: inherit;
+    grid-template-columns: 3fr 1fr;
+    justify-content: space-around;
+    align-items: center;
+    vertical-align: middle;
+    width: 100%;
 }
 
 // .regular-form > .incorrect {

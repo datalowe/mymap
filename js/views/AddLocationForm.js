@@ -10,8 +10,6 @@ const AddLocationForm = {
     oninit: async () => {
         await MarkerIcon.getList();
         await MarkerSignificance.getList();
-    },
-    oncreate: () => {
         Location.current.icon = MarkerIcon.list[0].id;
         Location.current.significance = MarkerSignificance.list[0].id;
     },
@@ -22,13 +20,14 @@ const AddLocationForm = {
                 onsubmit: async e => {
                     e.preventDefault();
                     await Location.save();
-                    // Location.current = {};
+                    Location.current = {};
                     m.route.set("/map");
                 }
             }, [
                 m("label[for=place-name]", "Name"),
                 m("input#place-name[name=place-name][type=text]" +
-                "[placeholder=Museum of London]",
+                "[placeholder=Museum of London]" +
+                `[value=${Location.current.place_name ? Location.current.place_name : ""}]`,
                 {
                     oninput: e => {
                         Location.current.place_name = e.target.value;
@@ -63,7 +62,8 @@ const AddLocationForm = {
                     }
                 ),
                 m("label[for=description]", "Description"),
-                m("textarea#description[name=description][placeholder=Has a London Black History exhibition I want to visit]",
+                m("textarea#description[name=description][placeholder=Has a London Black History exhibition I want to visit]" +
+                `[value=${Location.current.description ? Location.current.description : ""}]`,
                     {
                         oninput: e => {
                             Location.current.description = e.target.value;
@@ -86,19 +86,30 @@ const AddLocationForm = {
                     }),
                 ),
                 m("label[for=significance]", "Significance"),
-                m("select#significance[name=significance]",
-                    {
-                        oninput: e => {
-                            Location.current.significance = e.target.value;
-                        }
+                m('div.input-with-add-wrapper', [
+                    m("select#significance[name=significance]",
+                        {
+                            oninput: e => {
+                                Location.current.significance = e.target.value;
+                            }
+                        },
+                        MarkerSignificance.list.map(i => {
+                            const label = i.significance_label;
+                            return m(
+                                `option[value=${i.id}]`, 
+                                label.charAt(0).toUpperCase() + label.substr(1, label.length) +
+                                ` (${i.color_name.toLocaleLowerCase()})`
+                            );
+                        }),
+                    ),
+                    m(m.route.Link, {
+                        selector: "button",
+                        class: "add-secondary-button",
+                        type: "button",
+                        href: "/add-significance"
                     },
-                    MarkerSignificance.list.map(i => {
-                        const label = i.significance_label;
-                        return m(
-                            `option[value=${i.id}]`, 
-                            label.charAt(0).toUpperCase() + label.substr(1, label.length)
-                        );
-                    }),
+                    m("i[class=fas fa-plus]"))
+                    ]
                 ),
                 m("button.column-span-2.button.primary-button[type=submit]", "Save")
             ]),
@@ -108,7 +119,11 @@ const AddLocationForm = {
                     class: "button secondary-button",
                     type: "button",
                     href: "/map",
-                    // "button.secondary-button[type=button]"
+                    onclick: e => {
+                        e.preventDefault();
+                        Location.current = {};
+                        m.route.set('/map');
+                    }
                 },
                 "Back to map")
             ]),

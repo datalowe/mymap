@@ -28,13 +28,13 @@ const geocoder = new OpenStreetMapProvider();
 
 async function showMap() {
     let map;
+
     if (window.innerWidth < 800) {
-        map  = L.map('map', { zoomControl: false });
+        map  = L.map('map', { zoomControl: false, worldCopyJump: true });
     } else {
-        map = L.map('map', { zoomControl: true });
+        map = L.map('map', { zoomControl: true, worldCopyJump: true });
         map.zoomControl.setPosition('bottomleft');
     }
-    
 
     await Location.getList();
     await ForecastPoint.getForAllLocations();

@@ -5,8 +5,8 @@ import { MarkerSignificance } from "../models/MarkerSignificance.js";
 
 const AddSignificanceForm = {
     view: () => {
-        return m('div', [
-            m("h1", "Add location significance label"),
+        return m('div.send-form-container', [
+            m("h1[class=form-title]", "Add significance label"),
             m("form.regular-form", {
                 onsubmit: async e => {
                     e.preventDefault();
@@ -16,7 +16,7 @@ const AddSignificanceForm = {
             }, [
                 m("label[for=label]", "Name"),
                 m("input#label[name=label][type=text]" +
-                "[placeholder=Booked/planned place to sleep at]",
+                "[placeholder=Place to sleep]",
                     {
                         oninput: e => {
                             MarkerSignificance.current.significance_label = e.target.value;
@@ -27,7 +27,6 @@ const AddSignificanceForm = {
                 m("input#hex-code[name=hex-code][type=color]",
                     {
                         oninput: e => {
-                            console.log(e.target.value);
                             MarkerSignificance.current.hex_code = e.target.value;
                         }
                     }
@@ -41,7 +40,16 @@ const AddSignificanceForm = {
                         }
                     }
                 ),
-                m("button.column-span-2.button.success-button[type=submit]", "Save")
+                m("button.column-span-2.button.primary-button[type=submit]", "Save"),
+                m("div.form-reroute", [
+                    m(m.route.Link, {
+                        selector: "button",
+                        class: "button secondary-button",
+                        type: "button",
+                        href: "/add-location",
+                    },
+                    "Cancel")
+                ]),
             ]),
         ],
         );
