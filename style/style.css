@@ -467,6 +467,11 @@ button {
   vertical-align: center;
 }
 
+.primary-warning-button {
+  color: #fdfdfd;
+  background-color: #b33;
+}
+
 button,
 .add-secondary-button:hover {
   cursor: pointer;

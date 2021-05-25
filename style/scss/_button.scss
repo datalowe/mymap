@@ -7,13 +7,6 @@ button {
 .button {
     color: $black;
     background-color: $white;
-    // background: linear-gradient(
-    //     $white,
-    //     scale-color(
-    //         $white,
-    //         $lightness: -$gradient-base-lightness-shift
-    //     )
-    // );
     border: 1px solid scale-color(
         $white, $lightness: -$gradient-base-lightness-shift * 2
     );
@@ -58,6 +51,11 @@ button {
     align-items: center;
     justify-self: center;
     vertical-align: center;
+}
+
+.primary-warning-button {
+    color: $white;
+    background-color: $warning-color;
 }
 
 
