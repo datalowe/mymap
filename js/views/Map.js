@@ -17,9 +17,9 @@ import position from "../models/UserPosition.js";
 import StoredCoords from "../models/StoredCoords.js";
 
 import {
-    addMarkersWithLocData, 
-    clearMarkers, 
-    addWeatherMarkers, 
+    addMarkersWithLocData,
+    clearMarkers,
+    addWeatherMarkers,
     clearWeatherMarkers,
     newMarkerClickListener,
     formQMarkerAtPos
@@ -47,13 +47,12 @@ async function showMap() {
         const lastLoc = [...Location.list].sort((x, y) => x.id < y.id)[0];
         const lastCoords = [lastLoc.latitude, lastLoc.longitude];
 
-        // setView: Sets the view of the map (geographical center and zoom) 
+        // setView: Sets the view of the map (geographical center and zoom)
         // with the given animation options. ('12' is the zoom level)
         map.setView(lastCoords, 12);
     } else {
         map.setView([59.2722152, 15.2124328], 4);
     }
-    
 
     // other base maps can be found at:
     // http://leaflet-extras.github.io/leaflet-providers/preview/index.html
@@ -88,7 +87,7 @@ const Map = {
             }
 
             const marker = await formQMarkerAtPos({
-                'latitude': x.latlng.lat, 
+                'latitude': x.latlng.lat,
                 'longitude': x.latlng.lng
             });
 
@@ -98,16 +97,18 @@ const Map = {
 
             Map.map.qMarker.on('dblclick', newMarkerClickListener);
         }
-        )
+        );
     },
     view: function() {
         showPosition(Map.map);
         return ('div', [
             m(
                 "button#search-swap[type=button]", {
-                    onclick: async e => {
+                    onclick: async () => {
                         const swapSearch = document.getElementById('search-swap').children[0];
-                        const searchLocationsForm = document.getElementById('search-locations-form');
+                        const searchLocationsForm = document.getElementById(
+                            'search-locations-form'
+                        );
                         const searchAddressForm = document.getElementById('search-address-form');
 
                         if (swapSearch.classList.contains('fa-globe')) {
@@ -122,7 +123,7 @@ const Map = {
                             searchAddressForm.hidden = true;
                         }
                     }
-                }, 
+                },
                 m("i[class=fas fa-filter]")
             ),
             m("form#search-locations-form[hidden]",
@@ -133,13 +134,13 @@ const Map = {
                 },
                 [m("input#search-locations[type=text]" +
                     "[placeholder=Name/address/description keywords...]", {
-                        oninput: async e => {
-                            const locLs = await Location.filterList(e.target.value);
+                    oninput: async e => {
+                        const locLs = await Location.filterList(e.target.value);
 
-                            await clearMarkers(Map.map);
-                            await addMarkersWithLocData(locLs, Map.map);
-                        }
+                        await clearMarkers(Map.map);
+                        await addMarkersWithLocData(locLs, Map.map);
                     }
+                }
                 )]
             ),
             m("form#search-address-form", {
@@ -157,10 +158,12 @@ const Map = {
                             if (resultArr.length > 0) {
                                 for (const res of resultArr) {
                                     const newMarker = L.marker([res.y, res.x]);
+
                                     Map.newAddressMarkers.push(newMarker);
                                     const newMark = newMarker.addTo(Map.map)
                                         .bindPopup(res.label)
                                         .on('dblclick', newMarkerClickListener);
+
                                     newMark.address = res.label;
                                 }
                                 if (resultArr.length > 1) {
@@ -168,11 +171,10 @@ const Map = {
                                 } else {
                                     Map.map.setView([resultArr[0].y, resultArr[0].x], 8);
                                 }
-                            }
-                            else {
+                            } else {
                                 alert("No matching addresses found.");
                             }
-                    }); 
+                        });
                 }
             }, [
                 m("input#search-address[type=text]" +
@@ -191,18 +193,20 @@ const Map = {
                 m("button#button-search[type=submit]", m("i[class=fas fa-search]")),
             ]),
             m(
-                "button#goto-position[type=button][class=map-secondary-button floating-action-button]", 
+                "button#goto-position[type=button]" +
+                "[class=map-secondary-button floating-action-button]",
                 {
-                    onclick: async e => {
+                    onclick: async () => {
                         moveToPosition(Map.map);
                     }
                 },
                 m("i[class=fas fa-crosshairs map-secondary-button-content]")
             ),
             m(
-                "button#show-weather[type=button][class=map-primary-button floating-action-button]", 
+                "button#show-weather[type=button]" +
+                "[class=map-primary-button floating-action-button]",
                 {
-                    onclick: async e => {
+                    onclick: async () => {
                         if (Map.showingWeather) {
                             await clearWeatherMarkers(Map.map);
                             await addMarkersWithLocData(Location.list, Map.map);

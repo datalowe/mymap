@@ -35,38 +35,39 @@ const EditLocationForm = {
                 m("label[for=address]", "Address"),
                 m("textarea#address[name=address][placeholder=150 London Wall, London]" +
                     `[value=${Location.current.address ? Location.current.address : ""}]`,
-                    {
-                        oninput: e => {
-                            Location.current.address = e.target.value;
-                        }
+                {
+                    oninput: e => {
+                        Location.current.address = e.target.value;
                     }
+                }
                 ),
                 m("label[for=latitude]", "Latitude"),
                 m("input#latitude[name=latitude][type=number][step=any][placeholder=51.5178968]" +
                 `[value=${Location.current.latitude ? Location.current.latitude : ""}]`,
-                    {
-                        oninput: e => {
-                            Location.current.latitude = e.target.value;
-                        }
+                {
+                    oninput: e => {
+                        Location.current.latitude = e.target.value;
                     }
+                }
                 ),
                 m("label[for=longitude]", "Longitude"),
                 m("input#longitude[name=longitude][type=number][step=any][placeholder=-0.0958907]" +
                 `[value=${Location.current.longitude ? Location.current.longitude : ""}]`,
-                    {
-                        oninput: e => {
-                            Location.current.longitude = e.target.value;
-                        }
+                {
+                    oninput: e => {
+                        Location.current.longitude = e.target.value;
                     }
+                }
                 ),
                 m("label[for=description]", "Description"),
-                m("textarea#description[name=description][placeholder=Has a London Black History exhibition I want to visit]" +
+                m("textarea#description[name=description]" +
+                "[placeholder=Has a London Black History exhibition I want to visit]" +
                 `[value=${Location.current.description ? Location.current.description : ""}]`,
-                    {
-                        oninput: e => {
-                            Location.current.description = e.target.value;
-                        }
+                {
+                    oninput: e => {
+                        Location.current.description = e.target.value;
                     }
+                }
                 ),
                 m("label[for=icon]", "Icon"),
                 m("select#icon[name=icon]",
@@ -77,8 +78,9 @@ const EditLocationForm = {
                     },
                     MarkerIcon.list.map(i => {
                         const rName = i.humanreadable_name;
+
                         return m(
-                            `option[value=${i.id}]`, 
+                            `option[value=${i.id}]`,
                             rName.charAt(0).toUpperCase() + rName.substr(1, rName.length)
                         );
                     }),
@@ -93,8 +95,9 @@ const EditLocationForm = {
                         },
                         MarkerSignificance.list.map(i => {
                             const label = i.significance_label;
+
                             return m(
-                                `option[value=${i.id}]`, 
+                                `option[value=${i.id}]`,
                                 label.charAt(0).toUpperCase() + label.substr(1, label.length) +
                                 ` (${i.color_name.toLocaleLowerCase()})`
                             );
@@ -107,7 +110,7 @@ const EditLocationForm = {
                         href: "/add-significance?sendto=edit-location"
                     },
                     m("i[class=fas fa-plus]"))
-                    ]
+                ]
                 ),
                 m("button.column-span-2.button.primary-button[type=submit]", "Save")
             ]),

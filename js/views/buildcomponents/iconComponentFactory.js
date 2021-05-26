@@ -1,8 +1,8 @@
-const myCustomColour = '#583470';
+import L from "leaflet";
 
 // a factory function for producing Font Awesome-based
 // divIcon's
-// partly copied from, partly inspired by 
+// partly copied from, partly inspired by
 // https://stackoverflow.com/questions/23567203/leaflet-changing-marker-color
 const iconComponentFactory = (customColor, iconName) => {
     const markerHtmlStyle = `

@@ -1,3 +1,5 @@
+import L from "leaflet";
+
 import position from "../../models/UserPosition.js";
 
 import { iconComponentFactory } from "../buildcomponents/iconComponentFactory.js";
@@ -22,7 +24,7 @@ function showPosition(map) {
 function moveToPosition(map) {
     if (position.currentPosition.latitude && position.currentPosition.longitude) {
         map.setView(
-            [position.currentPosition.latitude, position.currentPosition.longitude], 
+            [position.currentPosition.latitude, position.currentPosition.longitude],
             12
         );
     }

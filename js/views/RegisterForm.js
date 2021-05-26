@@ -33,11 +33,11 @@ const RegisterForm = {
                 ),
                 m("input#password[name=password][required=required][type=password]" +
                 "[placeholder=password]",
-                    {
-                        oninput: e => {
-                            UserSingleton.password = e.target.value;
-                        }
+                {
+                    oninput: e => {
+                        UserSingleton.password = e.target.value;
                     }
+                }
                 ),
                 m("button.column-span-2.button.primary-button[type=submit]", "Register")
             ]),
@@ -45,4 +45,4 @@ const RegisterForm = {
     }
 };
 
-export { RegisterForm }
+export { RegisterForm };

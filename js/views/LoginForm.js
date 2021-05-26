@@ -29,12 +29,13 @@ const LoginForm = {
                 }
                 ),
                 // m("label[for=password]", "Password"),
-                m("input#password[name=password][required=required][type=password][placeholder=Password]",
-                    {
-                        oninput: e => {
-                            UserSingleton.password = e.target.value;
-                        }
+                m("input#password[name=password][required=required]" +
+                "[type=password][placeholder=Password]",
+                {
+                    oninput: e => {
+                        UserSingleton.password = e.target.value;
                     }
+                }
                 ),
                 m("button.column-span-2.button.primary-button[type=submit]", "Log in")
             ]),
@@ -51,4 +52,4 @@ const LoginForm = {
     }
 };
 
-export { LoginForm }
+export { LoginForm };

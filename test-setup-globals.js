@@ -17,5 +17,5 @@ global.requestAnimationFrame = dom.window.requestAnimationFrame;
 
 // And now, make sure JSDOM ends when the tests end.
 o.after(function() {
-    dom.window.close()
+    dom.window.close();
 });

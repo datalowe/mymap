@@ -29,6 +29,7 @@ const ForecastPoint = {
                 },
                 body: {'coords': coordsArr}
             });
+
             ForecastPoint.list = result;
         } catch (e) {
             console.log(e);
@@ -50,7 +51,8 @@ const ForecastPoint = {
                 },
                 body: [coordsObj]
             });
-            API_FORECAST_URL.current = result;
+
+            ForecastPoint.current = result;
         } catch (e) {
             console.log(e.message);
             m.route.set("/login");
@@ -58,20 +60,23 @@ const ForecastPoint = {
     },
     /*
     Retrieves forecast position data for all locations currently stored in
-    Location.list 
+    Location.list
     */
-   getForAllLocations: async () => {
+    getForAllLocations: async () => {
         if (Location.list.length === 0) {
             await Location.getList();
         }
         try {
-            const coords = Location.list.map(x => { return {'lat': x.latitude, 'lon': x.longitude} });
+            const coords = Location.list.map(x => {
+                return {'lat': x.latitude, 'lon': x.longitude};
+            }
+            );
 
             await ForecastPoint.getList(coords);
         } catch (e) {
             console.log(e);
         }
-   }
+    }
 };
 
 export { ForecastPoint };

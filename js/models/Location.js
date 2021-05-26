@@ -19,6 +19,7 @@ const Location = {
                     Authorization: `Token ${UserSingleton.token}`,
                 }
             });
+
             Location.list = result;
         } catch (e) {
             console.log(e);
@@ -34,6 +35,7 @@ const Location = {
                     Authorization: `Token ${UserSingleton.token}`,
                 }
             });
+
             Location.current = result;
         } catch (e) {
             console.log(e.message);
@@ -50,6 +52,7 @@ const Location = {
                 },
                 body: Location.current,
             });
+
             Location.current = result;
         } catch (e) {
             console.log(e);
@@ -57,7 +60,7 @@ const Location = {
     },
     update: async () => {
         try {
-            const result = await m.request({
+            await m.request({
                 method: "PUT",
                 url: Location.API_LOC_URL + `${Location.current.id}/`,
                 headers: {
@@ -71,7 +74,7 @@ const Location = {
     },
     deleteCurrent: async () => {
         try {
-            const result = await m.request({
+            await m.request({
                 method: "DELETE",
                 url: Location.API_LOC_URL + `${Location.current.id}/`,
                 headers: {

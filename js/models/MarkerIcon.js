@@ -46,6 +46,7 @@ const MarkerIcon = {
                     Authorization: `Token ${UserSingleton.token}`,
                 }
             });
+
             MarkerIcon.list = result;
         } catch (e) {
             console.log(e);
@@ -53,7 +54,7 @@ const MarkerIcon = {
         }
     },
     /**
-     * 
+     *
      * @returns (Font Awesome) CSS class names.
      */
     getClassNames: async () => {
@@ -67,6 +68,7 @@ const MarkerIcon = {
             await MarkerIcon.getList();
         }
         const codeName = MarkerIcon.list.find(x => x.id == iconId).code_name;
+
         return iconNames[codeName];
     }
 };

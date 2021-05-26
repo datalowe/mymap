@@ -5,7 +5,7 @@ import { UserSingleton } from './UserSingleton.js';
 
 /*
 Represents 'significance' of map markers, eg if a location
-is a high priority destination or if a location is 
+is a high priority destination or if a location is
 somewhere a traveller plans to stay for a night.
 */
 const MarkerSignificance = {
@@ -21,6 +21,7 @@ const MarkerSignificance = {
                     Authorization: `Token ${UserSingleton.token}`,
                 }
             });
+
             MarkerSignificance.list = result;
         } catch (e) {
             console.log(e);
@@ -36,6 +37,7 @@ const MarkerSignificance = {
                     Authorization: `Token ${UserSingleton.token}`,
                 }
             });
+
             MarkerSignificance.current = result;
         } catch (e) {
             MarkerSignificance.current = {};
@@ -54,6 +56,7 @@ const MarkerSignificance = {
                 },
                 body: MarkerSignificance.current,
             });
+
             MarkerSignificance.current = result;
         } catch (e) {
             console.log(e.message);
@@ -76,6 +79,7 @@ const MarkerSignificance = {
             await MarkerSignificance.getList();
         }
         const hexCode = MarkerSignificance.list.find(x => x.id == sigId).hex_code;
+
         return hexCode;
     }
 };

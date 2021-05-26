@@ -21,6 +21,7 @@ const UserSingleton = {
                     password: UserSingleton.password
                 }
             });
+
             UserSingleton.token = result.token;
         } catch (e) {
             UserSingleton.token = "";

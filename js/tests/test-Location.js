@@ -32,7 +32,8 @@ o.spec("Location", () => {
         o(Location.current.latitude).equals('56.1611345');
     });
 
-    o("Logged in user gets correct locations when filtering for valid description keyword", async () => {
+    o("Logged in user gets correct locations when filtering " +
+    "for valid description keyword", async () => {
         UserSingleton.username = 'regular';
         UserSingleton.password = 'password';
         await UserSingleton.login();
@@ -42,7 +43,8 @@ o.spec("Location", () => {
         o(resultLs.length).equals(1);
     });
 
-    o("Logged in user gets correct locations when filtering for valid description keyword, regardless of caps", async () => {
+    o("Logged in user gets correct locations when filtering " +
+    "for valid description keyword, regardless of caps", async () => {
         UserSingleton.username = 'regular';
         UserSingleton.password = 'password';
         await UserSingleton.login();
@@ -83,5 +85,4 @@ o.spec("Location", () => {
 
         o(resultLs.length).equals(1);
     });
-    
 });

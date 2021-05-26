@@ -20,11 +20,11 @@ const AddSignificanceForm = {
                 m("label[for=label]", "Name"),
                 m("input#label[name=label][type=text]" +
                 "[placeholder=Place to sleep]",
-                    {
-                        oninput: e => {
-                            MarkerSignificance.current.significance_label = e.target.value;
-                        }
+                {
+                    oninput: e => {
+                        MarkerSignificance.current.significance_label = e.target.value;
                     }
+                }
                 ),
                 m("label[for=hex-code]", "Color"),
                 m("input#hex-code[name=hex-code][type=color]",
@@ -37,11 +37,11 @@ const AddSignificanceForm = {
                 m("label[for=label]", "(Optional) Color name"),
                 m("input#label[name=label][type=text]" +
                 "[placeholder=Dune]",
-                    {
-                        oninput: e => {
-                            MarkerSignificance.current.color_name = e.target.value;
-                        }
+                {
+                    oninput: e => {
+                        MarkerSignificance.current.color_name = e.target.value;
                     }
+                }
                 ),
                 m("button.column-span-2.button.primary-button[type=submit]", "Save"),
                 m("div.form-reroute", [
