@@ -70,7 +70,6 @@ const addWeatherMarkers = async (forecastArr, map, hoursFromNow) => {
         });
 
         map.activeWeatherMarkers.push(marker);
-        console.log(marker);
         marker.addTo(map);
     }
 };
